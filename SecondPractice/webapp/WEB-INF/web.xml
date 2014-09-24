@@ -8,8 +8,18 @@
 	<description>
         This is Sencond Spring Practice Project
     </description>
+	
+	<servlet>
+		<servlet-name>web</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>web</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
 	<welcome-file-list>
-		<welcome-file>home.jsp</welcome-file>
+		<welcome-file>web</welcome-file>
 	</welcome-file-list>
 </web-app>

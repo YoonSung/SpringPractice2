@@ -8,5 +8,6 @@
 </head>
 <body>
 <h1>Index Test</h1>
+<%=request.getAttribute("test") %>
 </body>
 </html>
