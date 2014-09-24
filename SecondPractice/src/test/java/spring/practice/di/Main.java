@@ -1,32 +1,20 @@
 package spring.practice.di;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:/di.xml")
 public class Main {
-	public static void main(String[] args) {
-		//first();
-		two();
-	}
-
-	private static void two() {
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:/di.xml");
-		MessageRenderer messageRenderer = context.getBean("messageRenderer", MessageRenderer.class);
-		
-		messageRenderer.print();
-	}
-
-	public static void first() {
-		MessageProvider messageProvider;
-		MessageRenderer messageRenderer;
-		
-		//messageProvider = new HiWorldMessageProvider();
-		messageProvider = new HelloWorldMessageProvider();
-		
-		messageRenderer = new DefaultMessageRenderer();
-		messageRenderer = new NameMessageRenderer("Yoonsung");
-		
-		messageRenderer.setMessageProvider(messageProvider);
+	
+	@Autowired
+	MessageRenderer messageRenderer;
+	
+	@Test
+	public void messageRenderer() {
 		messageRenderer.print();
 	}
 }
