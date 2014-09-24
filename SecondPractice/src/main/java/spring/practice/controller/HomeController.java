@@ -9,12 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 	
-	private static final Logger log = LoggerFactory.getLogger(HomeController.class);
-	
 	@RequestMapping("/")
 	public String home(Model model) {
-		log.info("Test : {}", System.currentTimeMillis());
-		model.addAttribute("test", System.currentTimeMillis());
 		return "home";
 	}
 }
