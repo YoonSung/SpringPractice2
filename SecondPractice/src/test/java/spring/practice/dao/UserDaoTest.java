@@ -1,7 +1,7 @@
 package spring.practice.dao;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import javax.sql.DataSource;
 
@@ -31,5 +31,16 @@ public class UserDaoTest {
 		assertThat("testName", is(user.getName()));
 		assertThat("testEmail", is(user.getEmail()));
 	}
-
+	
+	@Test
+	public void create() throws Exception {
+		String userId = "Yoonsung";
+		
+		User user = new User(userId, "pass", "JungYoonSung", "estrella@nhnnext.org");
+		int affectedRowNum = userDao.create(user);
+		assertThat(affectedRowNum, is(affectedRowNum));
+		
+		User selectedUser = userDao.findById(userId);
+		assertThat(user, is(selectedUser));
+	}
 }
