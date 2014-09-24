@@ -14,6 +14,9 @@
 		p:driverClassName="${database.driverClassName}"
 		p:url="jdbc:h2:~/SpringPractice2"
 		p:username="database.username"
-		p:password=""
+		p:password="" />
+		
+	<bean id="userDao" class="spring.practice.dao.UserDao" 
+		p:dataSource-ref="dataSource"
 	/>
 </beans>
