@@ -9,6 +9,7 @@
 	<configs>
 		<config>webapp/WEB-INF/web-servlet.xml</config>
 		<config>src/main/resources/di.xml</config>
+		<config>src/main/resources/applicationContext.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
