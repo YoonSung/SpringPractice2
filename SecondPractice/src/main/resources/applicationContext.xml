@@ -12,8 +12,8 @@
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
 		p:driverClassName="${database.driverClassName}"
-		p:url="jdbc:h2:~/SpringPractice2"
-		p:username="database.username"
+		p:url="${database.url}"
+		p:username="${database.username}"
 		p:password="" />
 		
 	<bean id="userDao" class="spring.practice.dao.UserDao" 

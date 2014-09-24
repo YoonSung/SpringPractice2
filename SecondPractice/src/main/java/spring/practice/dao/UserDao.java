@@ -33,6 +33,10 @@ public class UserDao extends JdbcDaoSupport {
 
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				
+				if (rowNum == 0)
+					return null;
+				
 				return new User(
 						rs.getString("userId"),
 						rs.getString("password"),
