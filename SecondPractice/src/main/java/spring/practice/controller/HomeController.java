@@ -10,6 +10,6 @@ public class HomeController {
 	@RequestMapping("/")
 	public String home(Model model) {
 		model.addAttribute("test", System.currentTimeMillis());
-		return "home.jsp";
+		return "home";
 	}
 }
