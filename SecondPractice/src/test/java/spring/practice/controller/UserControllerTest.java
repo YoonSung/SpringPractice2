@@ -217,6 +217,7 @@ public class UserControllerTest {
 		assertEquals(testUser.getUserId(), userIdFromSession);
 	}
 	
+	//TODO 회원정보 수정에 대한 테스트코드 작성
 	@Test
 	public void modifyForm() throws Exception {
 		
