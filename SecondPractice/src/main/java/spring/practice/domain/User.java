@@ -2,9 +2,11 @@ package spring.practice.domain;
 
 import javax.validation.constraints.Size;
 
+import org.apache.ibatis.type.Alias;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+@Alias("Test")
 public class User {
 	
 	@NotEmpty

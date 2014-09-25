@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias alias="User" type="spring.practice.domain.User"/>
+		<typeAlias type="spring.practice.domain.User"/>
 	</typeAliases>
 	
   <mappers>
