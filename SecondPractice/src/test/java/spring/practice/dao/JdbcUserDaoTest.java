@@ -15,7 +15,7 @@ import spring.practice.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/applicationContext.xml")
-public class UserDaoTest {
+public class JdbcUserDaoTest {
 
 	@Autowired
 	DataSource dataSource;

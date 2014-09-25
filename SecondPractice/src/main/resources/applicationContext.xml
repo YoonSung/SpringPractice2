@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
-	
-	<context:property-placeholder
-		location="classpath:/application-properties.xml"
-	/>
+
+	<context:property-placeholder location="classpath:/application-properties.xml" />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
-		p:driverClassName="${database.driverClassName}"
-		p:url="${database.url}"
-		p:username="${database.username}"
-		p:password="${database.password}" />
-		
-	<bean id="userDao" class="spring.practice.dao.UserDao" 
-		p:dataSource-ref="dataSource"
+		p:driverClassName="${database.driverClassName}" p:url="${database.url}"
+		p:username="${database.username}" p:password="${database.password}" />
+
+	<!-- <bean id="userDao" class="spring.practice.dao.UserDao" p:dataSource-ref="dataSource" 
+		/> -->
+
+	<bean id="userDao" class="spring.practice.dao.MybatisUserDao"
+		p:dataSource-ref="dataSource" 
+		p:sqlSession-ref="sqlSession" 
 	/>
-	
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource" 
+		p:mapperLocations="classpath*:spring/practice/domain/**/*.xml"
+		p:typeAliasesPackage="	spring.practice.domain"		
+	/>	
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
 </beans>
