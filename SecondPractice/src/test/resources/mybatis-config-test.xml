@@ -19,6 +19,6 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="UserMapper.xml"/>
+    <mapper resource="spring/practice/domain/UserMapper.xml"/>
   </mappers>
 </configuration>
