@@ -2,6 +2,7 @@ package spring.practice.domain;
 
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class User {
@@ -17,6 +18,7 @@ public class User {
 	@NotEmpty
 	private String name;
 	
+	@Email
 	@NotEmpty
 	private String email;
 
