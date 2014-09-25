@@ -9,15 +9,34 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnit44Runner;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import spring.practice.dao.UserDao;
+
+@RunWith(MockitoJUnitRunner.class)
+@ContextConfiguration("classpath:/applicationContext.xml")
 public class UserControllerTest {
 
 	private MockMvc mockMvc;
 	
+	@Mock
+	UserDao userDao;
+	
+	@InjectMocks
+	private UserController userController;
+	
+	
 	@Before
 	public void setUp() throws Exception {
-		mockMvc = standaloneSetup(new UserController()).build();
+		mockMvc = standaloneSetup(userController).build();
 	}
 	
 	@Test

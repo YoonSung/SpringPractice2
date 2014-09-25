@@ -30,9 +30,9 @@ public class UserController {
 		//TODO Validation Check
 		//TODO 데이터베이스에서 동일 아이디 존재하는지 체크
 		User selectedUser = userDao.findById(user.getUserId());
-		if (selectedUser == null) {
+		if (selectedUser != null) {
 			//TODO Error Message 출력가능하도록 처리, 리다이렉트
-			log.info("User is Not Exists");
+			log.info("userId is Already exists");
 			
 			return "/user/form";
 		}
