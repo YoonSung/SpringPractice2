@@ -6,4 +6,12 @@
   <select id="findById" resultType="spring.practice.domain.User">
     SELECT * FROM tbl_user WHERE userId = #{userId}
   </select>
+  
+  <insert id="create" parameterType="spring.practice.domain.User">
+  	INSERT INTO tbl_user VALUES (#{userId}, #{password}, #{name}, #{email})
+  </insert>
+  
+  <update id="update" parameterType="spring.practice.domain.User">
+  	UPDATE tbl_user SET password=#{password}, name=#{name}, email=#{email} WHERE userId = #{userId}
+  </update>
 </mapper>
