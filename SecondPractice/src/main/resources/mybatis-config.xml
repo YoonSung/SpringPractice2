@@ -3,10 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<typeAliases>
-		<typeAlias type="spring.practice.domain.User"/>
-	</typeAliases>
-	
   <mappers>
     <mapper resource="spring/practice/domain/UserMapper.xml"/>
   </mappers>
