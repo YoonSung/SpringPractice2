@@ -28,7 +28,6 @@ public class UserController {
 		log.info("User : {}", user);
 		
 		//TODO Validation Check
-		
 		//TODO 데이터베이스에서 동일 아이디 존재하는지 체크
 		User selectedUser = userDao.findById(user.getUserId());
 		if (selectedUser == null) {
@@ -39,7 +38,6 @@ public class UserController {
 		}
 		
 		//TODO 데이터베이스 입력실패시 에러처리
-		
 		userDao.create(user);
 		
 		return "redirect:/";

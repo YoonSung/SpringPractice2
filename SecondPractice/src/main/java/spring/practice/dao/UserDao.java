@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
@@ -21,7 +22,9 @@ public class UserDao extends JdbcDaoSupport {
 	
 	@PostConstruct
 	public void init() {
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator(new ClassPathResource("user.sql"));
+		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+		populator.addScript(new ClassPathResource("user.sql"));
+		
 		DatabasePopulatorUtils.execute(populator, getDataSource());
 		log.info("Database Initialize Success!!");
 	}
@@ -33,20 +36,21 @@ public class UserDao extends JdbcDaoSupport {
 
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				
-				if (rowNum == 0)
-					return null;
-				
 				return new User(
 						rs.getString("userId"),
 						rs.getString("password"),
 						rs.getString("name"),
 						rs.getString("email")
-				);
+						);
 			}
 		};
 		
-		return getJdbcTemplate().queryForObject(sql, rowMapper, userId);
+		
+		try {
+			return getJdbcTemplate().queryForObject(sql, rowMapper, userId);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 
 	public int create(User user) {
