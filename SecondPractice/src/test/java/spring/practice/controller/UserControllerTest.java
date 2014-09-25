@@ -34,10 +34,18 @@ public class UserControllerTest {
 	@InjectMocks
 	private UserController userController;
 	
+	User testUser;
 	
 	@Before
 	public void setUp() throws Exception {
 		mockMvc = standaloneSetup(userController).build();
+		
+		String userId = "testUserId";
+		String password = "testPassword";
+		String name = "testName";
+		String email = "testEmail";
+		
+		testUser = new User(userId, password, name, email);
 	}
 	
 	@Test
@@ -49,11 +57,14 @@ public class UserControllerTest {
 	
 	@Test
 	public void createWithValidParameter() throws Exception {
+		
+		when(userDao.create(testUser)).thenReturn(1);
+		
 		mockMvc.perform(post("/users")
-				.param("userId", "TestName")
-				.param("password", "testPassword")
-				.param("name", "testName")
-				.param("email", "testEmail")
+				.param("userId", testUser.getUserId())
+				.param("password", testUser.getPassword())
+				.param("name", testUser.getName())
+				.param("email", testUser.getEmail())
 		)
 			.andExpect(status().isFound())
 			.andExpect(redirectedUrl("/"));
@@ -61,18 +72,32 @@ public class UserControllerTest {
 	
 	@Test
 	public void createWithAlreadyExistsUserId() throws Exception {
-		String userId = "testUserId";
-		String password = "testPassword";
-		String name = "testName";
-		String email = "testEmail";
 		
-		when(userDao.findById(userId)).thenReturn(new User(userId, password, name, email));
+		when(userDao.findById(testUser.getUserId())).thenReturn(testUser);
 		
 		mockMvc.perform(post("/users")
-				.param("userId", userId)
-				.param("password", password)
-				.param("name", name)
-				.param("email", email)
+				.param("userId", testUser.getUserId())
+				.param("password", testUser.getPassword())
+				.param("name", testUser.getName())
+				.param("email", testUser.getEmail())
+		)
+			//.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(model().size(2))
+			.andExpect(model().attributeExists("errorMessage"))
+			.andExpect(forwardedUrl("/user/form"));
+	}
+
+	@Test
+	public void createWithUnExpectedDatabaseError() throws Exception {
+		
+		when(userDao.create(testUser)).thenReturn(0);
+		
+		mockMvc.perform(post("/users")
+				.param("userId", testUser.getUserId())
+				.param("password", testUser.getPassword())
+				.param("name", testUser.getName())
+				.param("email", testUser.getEmail())
 		)
 			.andDo(print())
 			.andExpect(status().isOk())
@@ -80,5 +105,4 @@ public class UserControllerTest {
 			.andExpect(model().attributeExists("errorMessage"))
 			.andExpect(forwardedUrl("/user/form"));
 	}
-
 }
