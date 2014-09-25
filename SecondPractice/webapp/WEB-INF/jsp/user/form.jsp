@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="springform" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,7 +24,7 @@
 				</div>
 			
 				
-				<form class="form-horizontal" action="/users" method="post">
+				<springform:form modelAttribute="user" cssClass="form-horizontal" action="/users" method="post">
 					<c:if test="${not empty errorMessage}">
 						<div style="border: 1px solid red;color: red; font-size: 18px; padding: 20px; display: inline-block;">
 							${errorMessage}
@@ -31,25 +33,29 @@
 					<div class="control-group">
 						<label class="control-label" for="userId">사용자 아이디</label>
 						<div class="controls">
-							<input type="text" name="userId" value="" />
+							<springform:input path="userId" />
+							<springform:errors path="userId" />
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="password">비밀번호</label>
 						<div class="controls">
-							<input type="password" id="password" name="password" placeholder="">
+							<springform:password id="password" path="password"/>
+							<springform:errors path="password" />
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="name">이름</label>
 						<div class="controls">
-							<input type="text" id="name" name="name" value="" placeholder="">
+							<springform:input id="name" path="name" />
+							<springform:errors path="name" />
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="email">이메일</label>
 						<div class="controls">
-							<input type="text" id="email" name="email" value="" placeholder="">
+							<springform:input id="email" path="email" />
+							<springform:errors path="email" />
 						</div>
 					</div>
 					<div class="control-group">
@@ -57,7 +63,7 @@
 							<button type="submit" class="btn btn-primary">회원가입</button>
 						</div>
 					</div>
-				</form>
+				</springform:form>
 			</div>
 		</div>
 	</div>

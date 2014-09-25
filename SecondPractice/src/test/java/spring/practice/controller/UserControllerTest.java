@@ -1,5 +1,6 @@
 package spring.practice.controller;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -99,6 +100,16 @@ public class UserControllerTest {
 				.param("name", testUser.getName())
 				.param("email", testUser.getEmail())
 		)
+			//.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(model().size(2))
+			.andExpect(model().attributeExists("errorMessage"))
+			.andExpect(forwardedUrl("/user/form"));
+	}
+	
+	@Test
+	public void createWithEmptyUserName() throws Exception {
+		mockMvc.perform(post("/users"))
 			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(model().size(2))

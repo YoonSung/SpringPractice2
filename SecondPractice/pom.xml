@@ -46,6 +46,13 @@
 			<version>4.1.0.RELEASE</version>
 		</dependency>
 
+		<!-- Validation -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.1.2.Final</version>
+		</dependency>
+		
 		<!-- logging -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>

@@ -1,9 +1,23 @@
 package spring.practice.domain;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class User {
+	
+	@NotEmpty
+	@Size(min=4, max=12)
 	private String userId;
+	
+	@NotEmpty
+	@Size(min=4, max=12)
 	private String password;
+	
+	@NotEmpty
 	private String name;
+	
+	@NotEmpty
 	private String email;
 
 	public User(String userId, String password, String name, String email) {
