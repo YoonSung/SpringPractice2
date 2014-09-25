@@ -1,29 +1,16 @@
 package spring.practice.dao;
 
-import javax.sql.DataSource;
-
 import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import spring.practice.domain.User;
 
+@Repository
 public class MybatisUserDao implements UserDao {
 
-	private DataSource dataSource;
+	@Autowired
 	private SqlSession sqlSession;
-	
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-	
-	public DataSource getDataSource() {
-		return dataSource;
-	}
-	
-	public void setSqlSession(SqlSession sqlSession) {
-		this.sqlSession = sqlSession;
-	}
 	
 	@Override
 	public User findById(String userId) {
