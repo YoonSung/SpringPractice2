@@ -3,15 +3,15 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserMap">
-  <select id="findById" resultType="spring.practice.domain.User">
+  <select id="findById" resultType="User">
     SELECT * FROM tbl_user WHERE userId = #{userId}
   </select>
   
-  <insert id="create" parameterType="spring.practice.domain.User">
+  <insert id="create" parameterType="User">
   	INSERT INTO tbl_user VALUES (#{userId}, #{password}, #{name}, #{email})
   </insert>
   
-  <update id="update" parameterType="spring.practice.domain.User">
+  <update id="update" parameterType="User">
   	UPDATE tbl_user SET password=#{password}, name=#{name}, email=#{email} WHERE userId = #{userId}
   </update>
 </mapper>
