@@ -118,4 +118,75 @@ public class UserControllerTest {
 			.andExpect(model().attributeExists("user"))
 			.andExpect(forwardedUrl("/user/form"));
 	}
+	
+	@Test
+	public void loginForm() throws Exception {
+		mockMvc.perform(get("/users/login/form"))
+			.andExpect(status().isOk())
+			.andExpect(model().size(1))
+			.andExpect(model().attributeExists("authentication"))
+			.andExpect(forwardedUrl("/user/login"));
+	}
+	
+	@Test
+	public void loginWithValidParameter() throws Exception {
+		
+		when(userDao.findById(testUser.getUserId())).thenReturn(testUser);
+		
+		mockMvc.perform(post("/users/login")
+				.param("userId", testUser.getUserId())
+				.param("password", testUser.getPassword())
+				.param("name", testUser.getName())
+				.param("email", testUser.getEmail())
+		)
+			.andExpect(status().isFound())
+			.andExpect(redirectedUrl("/"));
+	}
+	
+	@Test
+	public void loginWithInvalidParameter() throws Exception {
+		
+		mockMvc.perform(post("/users/login")
+		)
+			.andExpect(status().isOk())
+			.andExpect(model().size(1))
+			.andExpect(model().attributeExists("authentication"))
+			.andExpect(forwardedUrl("/user/login"));
+	}
+	
+	@Test
+	public void loginWithNotExistsUserId() throws Exception {
+		
+		when(userDao.findById(testUser.getUserId())).thenReturn(null);
+		
+		mockMvc.perform(post("/users/login")
+				.param("userId", testUser.getUserId())
+				.param("password", testUser.getPassword())
+				.param("name", testUser.getName())
+				.param("email", testUser.getEmail())
+		)
+			.andExpect(status().isOk())
+			.andExpect(model().size(2))
+			.andExpect(model().attributeExists("authentication"))
+			.andExpect(model().attributeExists("errorMessage"))
+			.andExpect(forwardedUrl("/user/login"));
+	}
+	
+	@Test
+	public void loginWithWrongPassword() throws Exception {
+		
+		when(userDao.findById(testUser.getUserId())).thenReturn(testUser);
+		
+		mockMvc.perform(post("/users/login")
+				.param("userId", testUser.getUserId())
+				.param("password", "wrong")
+				.param("name", testUser.getName())
+				.param("email", testUser.getEmail())
+		)
+			.andExpect(status().isOk())
+			.andExpect(model().size(2))
+			.andExpect(model().attributeExists("authentication"))
+			.andExpect(model().attributeExists("errorMessage"))
+			.andExpect(forwardedUrl("/user/login"));
+	}
 }

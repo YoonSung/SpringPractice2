@@ -1,6 +1,9 @@
 package spring.practice.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import spring.practice.dao.UserDao;
+import spring.practice.domain.Authentication;
 import spring.practice.domain.User;
 
 @Controller
@@ -48,6 +52,35 @@ public class UserController {
 			return "/user/form";
 		}
 		
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/users/login/form")
+	public String loginForm(Authentication authentication) {
+		return "/user/login";
+	}
+	
+	@RequestMapping(value="/users/login", method=RequestMethod.POST)
+	public String loginForm(@Valid Authentication authentication, BindingResult bindingResult, Model model, HttpSession session) {
+		log.info("Authentication : {}", authentication);
+		
+		if (bindingResult.getErrorCount() > 0) {
+			return "/user/login";
+		}
+
+		User selectedUser = userDao.findById(authentication.getUserId());
+		
+		if (selectedUser == null) {
+			model.addAttribute("errorMessage", "존재하지 않는 아이디입니다. 다시한번 확인해 주세요");
+			return "/user/login";
+		}
+		
+		if ( selectedUser.isSamePassword(authentication) == false) {
+			model.addAttribute("errorMessage", "잘못된 비밀번호입니다. 다시한번 확인해 주세요");
+			return "/user/login";
+		}
+		
+		session.setAttribute("userId", authentication.getUserId());
 		return "redirect:/";
 	}
 }
