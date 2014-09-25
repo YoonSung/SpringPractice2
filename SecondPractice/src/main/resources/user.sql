@@ -9,4 +9,4 @@ CREATE TABLE tbl_user (
 	PRIMARY KEY               (userId)
 );
 
-INSERT INTO tbl_user VALUES('testUserId', 'testPassword', 'testName', 'testEmail');
+INSERT INTO tbl_user VALUES('testUserId', 'testPassword', 'testName', 'testEmail@naver.com');

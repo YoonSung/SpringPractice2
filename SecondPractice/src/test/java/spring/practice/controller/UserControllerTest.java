@@ -17,8 +17,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import spring.practice.dao.UserDao;
 import spring.practice.domain.User;
@@ -188,5 +191,34 @@ public class UserControllerTest {
 			.andExpect(model().attributeExists("authentication"))
 			.andExpect(model().attributeExists("errorMessage"))
 			.andExpect(forwardedUrl("/user/login"));
+	}
+	
+	@Test
+	public void loginTestForNormalCase() throws Exception {
+		
+		when(userDao.findById(testUser.getUserId())).thenReturn(testUser);
+		
+		ResultActions resultActions = mockMvc.perform(post("/users/login")
+				.param("userId", testUser.getUserId())
+				.param("password", testUser.getPassword())
+				.param("name", testUser.getName())
+				.param("email", testUser.getEmail())
+		)
+			.andExpect(status().isFound())
+			.andExpect(model().size(1))
+			.andExpect(model().attributeExists("authentication"))
+			.andExpect(redirectedUrl("/"));
+		
+		MockHttpServletRequest mockRequest = resultActions.andReturn().getRequest();
+		MockHttpSession mockSession = (MockHttpSession) mockRequest.getSession();
+		
+		String userIdFromSession = mockSession.getAttribute("userId").toString();
+		
+		assertEquals(testUser.getUserId(), userIdFromSession);
+	}
+	
+	@Test
+	public void modifyForm() throws Exception {
+		
 	}
 }

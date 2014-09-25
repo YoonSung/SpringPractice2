@@ -14,17 +14,28 @@
 </head>
 <body>
 	<%@ include file="../commons/_top.jspf"%>
-
+	
+	<c:choose>
+		<c:when test="${not empty sessionScope.userId }">
+			<c:set var="title" value="회원정보 수정" />
+			<c:set var="method" value="put" />
+		</c:when>
+		<c:otherwise>
+			<c:set var="title" value="회원가입" />
+			<c:set var="method" value="post" />
+		</c:otherwise>
+	</c:choose>
+	
 	<div class="container">
 		<div class="row">
 			<div class="span12">
 				<section id="typography">
 				<div class="page-header">
-					<h1>회원가입</h1>
+					<h1>${title}</h1>
 				</div>
 			
 				
-				<springform:form modelAttribute="user" cssClass="form-horizontal" action="/users" method="post">
+				<springform:form modelAttribute="user" cssClass="form-horizontal" action="/users" method="${method}">
 					<c:if test="${not empty errorMessage}">
 						<div style="border: 1px solid red;color: red; font-size: 18px; padding: 20px; display: inline-block;">
 							${errorMessage}
@@ -60,7 +71,7 @@
 					</div>
 					<div class="control-group">
 						<div class="controls">
-							<button type="submit" class="btn btn-primary">회원가입</button>
+							<button type="submit" class="btn btn-primary">${title}</button>
 						</div>
 					</div>
 				</springform:form>

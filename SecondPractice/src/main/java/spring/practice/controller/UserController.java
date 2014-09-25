@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -82,5 +83,40 @@ public class UserController {
 		
 		session.setAttribute("userId", authentication.getUserId());
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/users/{userId}/form")
+	public String modifyForm(@PathVariable String userId, Model model, HttpSession session) {
+		
+		//TODO HttpSessionUtil과 같은 체크 라이브러리를 사용한다
+		Object userObject = session.getAttribute("userId");
+		String userIdFromSession = null;
+		
+		if (userObject == null) {
+			return "redirect:/";
+		} else {
+			try {
+				userIdFromSession  = userObject.toString();
+			} catch (Exception e) {
+				return "redirect:/";
+			}
+		}
+		
+		//TODO 현재 세션에 저장된 userId와 다른값이라면
+		if (! userIdFromSession.equalsIgnoreCase(userId)) {
+			//TODO 에러메세지 출력
+			return "redirect:/users/" + userIdFromSession;
+		}
+		
+		//TODO User가 존재하지 않다면
+		User selectedUser = userDao.findById(userId);
+		if (selectedUser == null) {
+			//TODO 에러메세지 출력
+			return "redirect:/";
+		}
+		
+		model.addAttribute("user", selectedUser);
+		
+		return "/user/form";
 	}
 }

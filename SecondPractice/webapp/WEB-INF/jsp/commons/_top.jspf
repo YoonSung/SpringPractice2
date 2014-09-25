@@ -15,7 +15,7 @@
 					<li><a href="/">Home</a></li>
 					<c:choose>
 						<c:when test="${not empty sessionScope.userId}">
-							<li><a href="">개인정보수정</a></li>
+							<li><a href="/users/${sessionScope.userId}/form">개인정보수정</a></li>
 							<li><a href="">로그아웃</a></li>
 						</c:when>
 						<c:otherwise>
