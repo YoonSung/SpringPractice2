@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,6 +23,11 @@
 			
 				
 				<form class="form-horizontal" action="/users" method="post">
+					<c:if test="${not empty errorMessage}">
+						<div style="border: 1px solid red;color: red; font-size: 18px; padding: 20px; display: inline-block;">
+							${errorMessage}
+						</div>
+					</c:if>
 					<div class="control-group">
 						<label class="control-label" for="userId">사용자 아이디</label>
 						<div class="controls">
