@@ -46,6 +46,12 @@
 			<version>4.1.0.RELEASE</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.7</version>
+		</dependency>
+
 		<!-- Validation -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

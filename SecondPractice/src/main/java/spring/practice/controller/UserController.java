@@ -3,8 +3,6 @@ package spring.practice.controller;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,5 +134,11 @@ public class UserController {
 		model.addAttribute("user", selectedUser);
 		
 		return "/user/form";
+	}
+	
+	@RequestMapping("/users/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("userId");
+		return "redirect:/";
 	}
 }

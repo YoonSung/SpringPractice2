@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserMap">
+  <select id="findById" resultType="spring.practice.domain.User">
+    SELECT * FROM tbl_user WHERE userId = #{userId}
+  </select>
+</mapper>
