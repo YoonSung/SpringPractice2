@@ -23,7 +23,7 @@ public class UserController {
 	UserDao userDao;
 	
 	@RequestMapping("/users/form")
-	public String form() {
+	public String form(User user) {
 		return "/user/form";
 	}
 	

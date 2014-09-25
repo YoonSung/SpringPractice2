@@ -44,7 +44,7 @@ public class UserControllerTest {
 		String userId = "testUserId";
 		String password = "testPassword";
 		String name = "testName";
-		String email = "testEmail";
+		String email = "testEmail@naver.com";
 		
 		testUser = new User(userId, password, name, email);
 	}
@@ -86,6 +86,7 @@ public class UserControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(model().size(2))
 			.andExpect(model().attributeExists("errorMessage"))
+			.andExpect(model().attributeExists("user"))
 			.andExpect(forwardedUrl("/user/form"));
 	}
 
@@ -104,6 +105,7 @@ public class UserControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(model().size(2))
 			.andExpect(model().attributeExists("errorMessage"))
+			.andExpect(model().attributeExists("user"))
 			.andExpect(forwardedUrl("/user/form"));
 	}
 	
@@ -112,8 +114,8 @@ public class UserControllerTest {
 		mockMvc.perform(post("/users"))
 			.andDo(print())
 			.andExpect(status().isOk())
-			.andExpect(model().size(2))
-			.andExpect(model().attributeExists("errorMessage"))
+			.andExpect(model().size(1))
+			.andExpect(model().attributeExists("user"))
 			.andExpect(forwardedUrl("/user/form"));
 	}
 }
