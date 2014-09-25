@@ -56,6 +56,24 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping(value="/users", method=RequestMethod.PUT)
+	public String modify(@Valid User user, BindingResult bindingResult, Model model) {
+		log.info("User : {}", user);
+		
+		if (bindingResult.getErrorCount() > 0) {
+			return "/user/form";
+		}
+
+		int affectedRowNum = userDao.update(user);
+		
+		if (affectedRowNum != 1) {
+			model.addAttribute("errorMessage", "예기치 못한 에러가 발생했습니다. 다시 시도해주세요");
+			return "/user/form";
+		}
+		
+		return "redirect:/";
+	}
+	
 	@RequestMapping("/users/login/form")
 	public String loginForm(Authentication authentication) {
 		return "/user/login";
